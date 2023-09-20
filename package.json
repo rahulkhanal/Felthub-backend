@@ -1,0 +1,20 @@
+{
+  "name": "art",
+  "version": "1.0.0",
+  "description": "this is pure art ecommerce website",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.js"
+  },
+  "keywords": [
+    "art",
+    "website"
+  ],
+  "author": "Rahul Khanal",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}
