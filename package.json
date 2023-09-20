@@ -1,5 +1,5 @@
 {
-  "name": "art",
+  "name": "felthub",
   "version": "1.0.0",
   "description": "this is pure art ecommerce website",
   "main": "app.js",
@@ -15,6 +15,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "sequelize": "^6.33.0"
   }
 }
