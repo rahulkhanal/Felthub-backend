@@ -28,7 +28,7 @@ const addCompany = async (req, resp, next) => {
         email,
         password: hashedPassword,
       });
-      return resp.status(200).json(...data, ...data2);
+      return resp.status(200).json({ ...data, ...data2 });
     }
   });
 };
