@@ -13,4 +13,8 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
+const db = {};
+db.company = require("./company")(sequelize, DataTypes);
+db.credintial = require("./credintial")(sequelize, DataTypes);
+
 module.exports = sequelize;

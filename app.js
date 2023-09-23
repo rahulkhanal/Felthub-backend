@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Express = require("express");
 const app = Express();
 var bodyParser = require("body-parser");
@@ -5,7 +6,9 @@ const middlewareErr = require("./middlewares/err/middleware-err");
 const BaseURL = require("./utils/config");
 const { userRoutes } = require("./routes/user");
 const sequelize = require("./model/connection");
-require("dotenv").config();
+
+//sync model
+sequelize.sync({ force: true });
 
 //crusial middlewares
 app.use(bodyParser.json());
