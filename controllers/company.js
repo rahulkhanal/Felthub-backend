@@ -7,7 +7,7 @@ const addCompany = async (req, resp, next) => {
   if (!name || !profile || !address) {
     return next(new ErrorHandler("Insufficient Credintial", 400));
   }
-  const data = company.create({ name, profile, address });
+  const data = await company.create({ name, profile, address });
   return resp.status(200).json(data);
 };
 module.exports = { addCompany };
