@@ -13,8 +13,12 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
+//models object
 const db = {};
 db.company = require("./company")(sequelize, DataTypes);
 db.credintial = require("./credintial")(sequelize, DataTypes);
+
+//relations
+db.company.hasOne(db.credintial, { onUpdate: "CASCADE", onDelete: "RESTRICT" }); //one-to-one relation
 
 module.exports = sequelize;
