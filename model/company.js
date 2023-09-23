@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       profile: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       address: {
         type: DataTypes.STRING,

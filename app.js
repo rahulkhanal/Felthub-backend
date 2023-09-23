@@ -9,6 +9,7 @@ const { homePage, onlyJson } = require("./others/others");
 const db = require("./model/connection");
 
 //---------------------MIDDLEWARES
+app.get("/", homePage);
 app.use(onlyJson);
 app.use(bodyParser.json());
 
@@ -16,7 +17,6 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 9000;
 
 //---------------------API Routes
-app.get("/", homePage);
 app.use("/api/v1", companyRoutes);
 
 //---------------------error middlewares
