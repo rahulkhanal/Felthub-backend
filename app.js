@@ -8,21 +8,21 @@ const { companyRoutes } = require("./routes/company");
 const { homePage, onlyJson } = require("./others/others");
 const db = require("./model/connection");
 
-//---------------------middlewares
+//---------------------MIDDLEWARES
 app.use(onlyJson);
 app.use(bodyParser.json());
 
-//--------------------Declartion
+//---------------------DECLARATION
 const PORT = process.env.PORT || 9000;
 
 //---------------------API Routes
 app.get("/", homePage);
 app.use("/api/v1", companyRoutes);
 
-//----------------------error middlewares
+//---------------------error middlewares
 app.use(middlewareErr);
 
-//------------------------server
+//----------------------server
 app.listen(PORT, () => {
   console.log(`Listening in: ${BaseURL}`);
 });
