@@ -15,10 +15,14 @@ try {
 
 //models object
 const db = {};
+db.sequelize = sequelize;
 db.company = require("./company")(sequelize, DataTypes);
 db.credintial = require("./credintial")(sequelize, DataTypes);
 
 //relations
 db.company.hasOne(db.credintial, { onUpdate: "CASCADE", onDelete: "RESTRICT" }); //one-to-one relation
 
-module.exports = sequelize;
+//sync model
+db.sequelize.sync({ force: false });
+
+module.exports = db;
