@@ -7,6 +7,7 @@ const BaseURL = require("./utils/config");
 const { companyRoutes } = require("./routes/company");
 const { homePage, onlyJson } = require("./others/others");
 const db = require("./model/connection");
+const { loginRoutes } = require("./routes/login");
 
 //---------------------MIDDLEWARES
 app.get("/", homePage);
@@ -18,11 +19,12 @@ const PORT = process.env.PORT || 9000;
 
 //---------------------API Routes
 app.use("/api/v1", companyRoutes);
+app.use("/api/v1", loginRoutes);
 
-//---------------------error middlewares
+//---------------------Error middlewares
 app.use(middlewareErr);
 
-//----------------------server
+//----------------------Server
 app.listen(PORT, () => {
   console.log(`Listening in: ${BaseURL}`);
 });

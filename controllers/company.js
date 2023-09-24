@@ -1,9 +1,10 @@
 const ErrorHandler = require("../errors/custom-err");
+const catchAsyncError = require("../middlewares/err/async-err");
 const db = require("../model/connection");
 const { company, credintial } = db;
 const bcrypt = require("bcryptjs");
 
-const addCompany = async (req, resp, next) => {
+const addCompany = catchAsyncError(async (req, resp, next) => {
   const { name, profile, address, email, password } = req.body;
   if (!name || !address || !email || !password) {
     return next(new ErrorHandler("Insufficient Credintial", 400));
@@ -31,5 +32,5 @@ const addCompany = async (req, resp, next) => {
       return resp.status(200).json({ ...data, ...data2 });
     }
   });
-};
+});
 module.exports = { addCompany };
