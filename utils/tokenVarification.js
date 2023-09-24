@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const catchAsyncError = require("../middlewares/err/async-err");
 const ErrorHandler = require("../errors/custom-err");
+const db = require("../model/connection");
 const secretKey = process.env.SECRET_KEY;
+const { company, credintial } = db;
 
 module.exports = catchAsyncError(async (req, resp, next) => {
   const token = req.header("Authorization");
@@ -12,7 +14,23 @@ module.exports = catchAsyncError(async (req, resp, next) => {
     if (!decodedToken) {
       next(new ErrorHandler("Token verification failed", 401));
     } else {
-      resp.status(200).json({ message: "Valid token" });
+      const data = await credintial.findOne({
+        where: {
+          id: decodedToken.userId,
+        },
+      });
+      const data2 = await company.findOne({
+        where: {
+          id: data.companyID,
+        },
+        include: [
+          {
+            model: credintial,
+            attributes: ["email"],
+          },
+        ],
+      });
+      await resp.status(200).json({ message: "Valid Token", data2 });
       next();
     }
   }

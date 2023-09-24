@@ -4,6 +4,7 @@ const db = require("../model/connection");
 const { company, credintial } = db;
 const bcrypt = require("bcryptjs");
 
+//create company
 const addCompany = catchAsyncError(async (req, resp, next) => {
   const { name, address, email, password } = req.body;
   const { file } = req;
@@ -36,4 +37,5 @@ const addCompany = catchAsyncError(async (req, resp, next) => {
     }
   });
 });
+
 module.exports = { addCompany };

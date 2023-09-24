@@ -20,7 +20,11 @@ db.company = require("./company")(sequelize, DataTypes);
 db.credintial = require("./credintial")(sequelize, DataTypes);
 
 //relations
-db.company.hasOne(db.credintial, { onUpdate: "CASCADE", onDelete: "RESTRICT" }); //one-to-one relation
+db.company.hasOne(
+  db.credintial,
+  { foreignKey: "companyID" },
+  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
+); //one-to-one relation
 
 //sync model
 db.sequelize.sync({ force: false });
