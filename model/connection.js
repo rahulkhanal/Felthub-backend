@@ -13,18 +13,42 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-//models object
+//--------------models object
 const db = {};
 db.sequelize = sequelize;
 db.company = require("./company")(sequelize, DataTypes);
 db.credintial = require("./credintial")(sequelize, DataTypes);
+db.banner = require("./banner")(sequelize, DataTypes);
+db.document = require("./document")(sequelize, DataTypes);
+db.team = require("./team")(sequelize, DataTypes);
+db.social = require("./social")(sequelize, DataTypes);
 
-//relations
+//---------------relations
 db.company.hasOne(
   db.credintial,
   { foreignKey: "companyID" },
   { onUpdate: "CASCADE", onDelete: "RESTRICT" }
 ); //one-to-one relation
+db.company.hasMany(
+  db.banner,
+  { foreignKey: "companyID" },
+  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
+); //one-to-many relation
+db.company.hasMany(
+  db.document,
+  { foreignKey: "companyID" },
+  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
+); //one-to-many relation
+db.company.hasMany(
+  db.team,
+  { foreignKey: "companyID" },
+  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
+); //one-to-many relation
+db.company.hasMany(
+  db.social,
+  { foreignKey: "companyID" },
+  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
+); //one-to-many relation
 
 //sync model
 db.sequelize.sync({ force: false });
