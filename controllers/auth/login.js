@@ -17,7 +17,6 @@ const loginCompany = catchAsyncError(async (req, resp, next) => {
         email: email,
       },
     });
-    console.log(user);
     // Check if the user exists
     if (!user) {
       return next(new ErrorHandler("Invalid Email", 400));
@@ -31,7 +30,7 @@ const loginCompany = catchAsyncError(async (req, resp, next) => {
       const token = jwt.sign({ userId: user.id }, secretKey, {
         expiresIn: "1h",
       });
-      resp.status(200).json({ token });
+      resp.status(200).json({ message: "Login success", token });
     }
   }
 });
