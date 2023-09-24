@@ -5,7 +5,10 @@ const { company, credintial } = db;
 const bcrypt = require("bcryptjs");
 
 const addCompany = catchAsyncError(async (req, resp, next) => {
-  const { name, profile, address, email, password } = req.body;
+  const { name, address, email, password } = req.body;
+  const { file } = req;
+  const filePath = file?.path || null;
+  console.log(filePath);
   if (!name || !address || !email || !password) {
     return next(new ErrorHandler("Insufficient Credintial", 400));
   }
@@ -17,7 +20,7 @@ const addCompany = catchAsyncError(async (req, resp, next) => {
   if (existingUser && email) {
     return next(new ErrorHandler("User already exist", 400));
   }
-  const data = await company.create({ name, profile, address });
+  const data = await company.create({ name, profile: filePath, address });
   const saltRounds = 10;
   bcrypt.hash(password, saltRounds, async (err, hashedPassword) => {
     if (err) {
