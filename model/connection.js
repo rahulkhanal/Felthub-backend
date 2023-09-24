@@ -29,11 +29,11 @@ db.company.hasOne(
   { foreignKey: "companyID" },
   { onUpdate: "CASCADE", onDelete: "RESTRICT" }
 ); //one-to-one relation
-db.company.hasMany(
-  db.banner,
-  { foreignKey: "companyID" },
-  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
-); //one-to-many relation
+db.company.hasMany(db.banner, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-many relation
 db.company.hasMany(
   db.document,
   { foreignKey: "companyID" },

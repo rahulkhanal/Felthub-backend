@@ -30,7 +30,8 @@ module.exports = catchAsyncError(async (req, resp, next) => {
           },
         ],
       });
-      await resp.status(200).json({ message: "Valid Token", data2 });
+      req.loginedUser = data2.id;
+      // await resp.status(200).json({ message: "Valid Token", data2 });
       next();
     }
   }

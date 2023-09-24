@@ -9,7 +9,6 @@ const addCompany = catchAsyncError(async (req, resp, next) => {
   const { name, address, email, password } = req.body;
   const { file } = req;
   const filePath = file?.path || null;
-  console.log(filePath);
   if (!name || !address || !email || !password) {
     return next(new ErrorHandler("Insufficient Credintial", 400));
   }

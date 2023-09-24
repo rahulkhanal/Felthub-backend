@@ -8,6 +8,7 @@ const { companyRoutes } = require("./routes/company");
 const { homePage, onlyJson, routeNotFound } = require("./others/others");
 const db = require("./model/connection");
 const { loginRoutes } = require("./routes/login");
+const { bannerRoutes } = require("./routes/banner");
 
 //---------------------MIDDLEWARES
 app.get("/", homePage);
@@ -22,6 +23,7 @@ const PORT = process.env.PORT || 9000;
 //---------------------API Routes
 app.use("/api/v1", companyRoutes);
 app.use("/api/v1", loginRoutes);
+app.use("/api/v1", bannerRoutes);
 app.get("*", routeNotFound);
 
 //---------------------Error middlewares
