@@ -37,4 +37,47 @@ const addCompany = catchAsyncError(async (req, resp, next) => {
   });
 });
 
-module.exports = { addCompany };
+const deleteCompany = catchAsyncError(async (req, resp, next) => {
+  const { id } = req.params;
+  const existingUser = await company.findOne({
+    where: {
+      id: id,
+    },
+  });
+  console.log(existingUser);
+  if (existingUser) {
+    const data = await company.destroy({
+      where: {
+        id: id,
+      },
+    });
+    return resp.status(200).json({ data });
+  }
+});
+
+const getCompany = catchAsyncError(async (req, resp, next) => {
+  const { id } = req.params;
+  console.log(id);
+  const data = await company.findOne({
+    where: {
+      id: id,
+    },
+  });
+  if (!data) {
+    return next(new ErrorHandler("Invalid company", 400));
+  }
+  const authorized = await company.findOne({
+    where: {
+      id: id,
+    },
+    include: [
+      {
+        model: credintial,
+        attributes: ["email"],
+      },
+    ],
+  });
+  await resp.status(200).json({ authorized });
+});
+
+module.exports = { addCompany, deleteCompany, getCompany };
