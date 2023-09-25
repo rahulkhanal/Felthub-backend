@@ -5,6 +5,7 @@ const {
   getCompany,
   updateCompanyDetail,
   updateCompanyProfile,
+  updateCompanyCredintial,
 } = require("../controllers/company");
 const upload = require("../multer");
 const tokenVerification = require("../middlewares/tokenVerification");
@@ -23,6 +24,11 @@ Router.patch(
   tokenVerification,
   upload.single("file"),
   updateCompanyProfile
+);
+Router.patch(
+  "/update-company-credential/:id",
+  tokenVerification,
+  updateCompanyCredintial
 );
 
 module.exports = {

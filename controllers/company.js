@@ -109,10 +109,63 @@ const updateCompanyProfile = async (req, resp, next) => {
   resp.status(200).json({ message: "Updated Sucessfully", data });
 };
 
+const updateCompanyCredintial = async (req, resp, next) => {
+  const { id } = req.params;
+  const { email, oldpassword, newpassword } = req.body;
+  if (email) {
+    const data = await credintial.update(
+      {
+        email: email,
+      },
+      {
+        where: {
+          companyID: id,
+        },
+      }
+    );
+    resp.status(200).json({ message: "Updated Sucessfully", data });
+  } else if (oldpassword && newpassword) {
+    const existingUser = await credintial.findOne({
+      where: {
+        companyID: id,
+      },
+    });
+    const passwordMatch = await bcrypt.compareSync(
+      oldpassword,
+      existingUser.password
+    );
+    if (!passwordMatch) {
+      return next(new ErrorHandler("Invalid Password", 400));
+    } else {
+      const saltRounds = 10;
+      bcrypt.hash(newpassword, saltRounds, async (err, hashedPassword) => {
+        if (err) {
+          next(new ErrorHandler("Error in hashing Password", 400));
+        } else {
+          const data = await credintial.update(
+            {
+              password: hashedPassword,
+            },
+            {
+              where: {
+                companyID: id,
+              },
+            }
+          );
+          return resp.status(200).json({ data });
+        }
+      });
+    }
+  } else {
+    next(ErrorHandler("Insufficient Credential", 400));
+  }
+};
+
 module.exports = {
   addCompany,
   deleteCompany,
   getCompany,
   updateCompanyDetail,
   updateCompanyProfile,
+  updateCompanyCredintial,
 };
