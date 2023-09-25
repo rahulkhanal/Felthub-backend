@@ -4,6 +4,7 @@ const db = require("../model/connection");
 
 const addBanner = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
+  const { heading } = req.body;
   const { file } = req;
   if (!file) {
     return next(new ErrorHandler("Image not found", 400));
@@ -11,9 +12,28 @@ const addBanner = catchAsyncError(async (req, resp, next) => {
   const filePath = file?.path;
   const data = await db.banner.create({
     image: filePath,
+    heading,
     companyID: loginedUser,
   });
   resp.status(200).json(data);
 });
 
-module.exports = { addBanner };
+const getBanner = catchAsyncError(async (req, resp, next) => {
+  const loginedUser = req.loginedUser;
+
+  const data = await db.banner.findAll({
+    where: { companyID: loginedUser },
+  });
+  resp.status(200).json(data);
+});
+
+const deleteBanner = catchAsyncError(async (req, resp, next) => {
+  const loginedUser = req.loginedUser;
+  const { id } = req.params;
+  const data = await db.banner.destroy({
+    where: { companyID: loginedUser, id: id },
+  });
+  resp.status(200).json(data);
+});
+
+module.exports = { addBanner, getBanner, deleteBanner };
