@@ -80,4 +80,39 @@ const getCompany = catchAsyncError(async (req, resp, next) => {
   await resp.status(200).json({ authorized });
 });
 
-module.exports = { addCompany, deleteCompany, getCompany };
+const updateCompanyDetail = async (req, resp, next) => {
+  const { id } = req.params;
+  const { name, address } = req.body;
+  const data = await company.update(
+    { name, address },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
+  resp.status(200).json({ message: "Updated Sucessfully", data });
+};
+
+const updateCompanyProfile = async (req, resp, next) => {
+  const { id } = req.params;
+  const { file } = req;
+  const filePath = file?.path || null;
+  const data = await company.update(
+    { profile: filePath },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
+  resp.status(200).json({ message: "Updated Sucessfully", data });
+};
+
+module.exports = {
+  addCompany,
+  deleteCompany,
+  getCompany,
+  updateCompanyDetail,
+  updateCompanyProfile,
+};
