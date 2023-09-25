@@ -2,6 +2,7 @@ const ErrorHandler = require("../errors/custom-err");
 const catchAsyncError = require("../middlewares/err/async-err");
 const db = require("../model/connection");
 
+//add document
 const addDocument = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const { file } = req;
@@ -21,4 +22,33 @@ const addDocument = catchAsyncError(async (req, resp, next) => {
   resp.status(200).json(data);
 });
 
-module.exports = { addDocument };
+//read document
+const readDocument = catchAsyncError(async (req, resp, next) => {
+  const loginedUser = req.loginedUser;
+
+  const data = await db.document.findAll({
+    where: { companyID: loginedUser },
+  });
+  resp.status(200).json(data);
+});
+
+//delete document
+const deleteDocument = catchAsyncError(async (req, resp, next) => {
+  const { id } = req.params;
+  const existingUser = await db.document.findOne({
+    where: {
+      id: id,
+    },
+  });
+  if (!existingUser) {
+    return next(new ErrorHandler("Invalid document"));
+  }
+  const data = await db.document.destroy({
+    where: {
+      id: id,
+    },
+  });
+  return resp.status(200).json({ data });
+});
+
+module.exports = { addDocument, readDocument, deleteDocument };

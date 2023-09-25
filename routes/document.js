@@ -1,7 +1,11 @@
 const express = require("express");
 const upload = require("../multer");
 const tokenVerification = require("../middlewares/tokenVerification");
-const { addDocument } = require("../controllers/document");
+const {
+  addDocument,
+  readDocument,
+  deleteDocument,
+} = require("../controllers/document");
 const Router = express.Router();
 
 Router.post(
@@ -10,6 +14,8 @@ Router.post(
   upload.single("file"),
   addDocument
 );
+Router.get("/get-document", tokenVerification, readDocument);
+Router.delete("/delete-document/:id", tokenVerification, deleteDocument);
 
 module.exports = {
   documentRoutes: Router,

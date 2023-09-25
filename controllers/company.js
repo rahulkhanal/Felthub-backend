@@ -37,6 +37,7 @@ const addCompany = catchAsyncError(async (req, resp, next) => {
   });
 });
 
+//delete company
 const deleteCompany = catchAsyncError(async (req, resp, next) => {
   const { id } = req.params;
   const existingUser = await company.findOne({
@@ -55,6 +56,7 @@ const deleteCompany = catchAsyncError(async (req, resp, next) => {
   }
 });
 
+//get company by id
 const getCompany = catchAsyncError(async (req, resp, next) => {
   const { id } = req.params;
   console.log(id);
@@ -80,6 +82,7 @@ const getCompany = catchAsyncError(async (req, resp, next) => {
   await resp.status(200).json({ authorized });
 });
 
+//update company detail
 const updateCompanyDetail = async (req, resp, next) => {
   const { id } = req.params;
   const { name, address } = req.body;
@@ -94,6 +97,7 @@ const updateCompanyDetail = async (req, resp, next) => {
   resp.status(200).json({ message: "Updated Sucessfully", data });
 };
 
+//update company profile
 const updateCompanyProfile = async (req, resp, next) => {
   const { id } = req.params;
   const { file } = req;
@@ -109,6 +113,7 @@ const updateCompanyProfile = async (req, resp, next) => {
   resp.status(200).json({ message: "Updated Sucessfully", data });
 };
 
+//update company password
 const updateCompanyCredintial = async (req, resp, next) => {
   const { id } = req.params;
   const { email, oldpassword, newpassword } = req.body;
