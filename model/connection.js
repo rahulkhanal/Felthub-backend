@@ -24,31 +24,31 @@ db.team = require("./team")(sequelize, DataTypes);
 db.social = require("./social")(sequelize, DataTypes);
 
 //---------------relations
-db.company.hasOne(
-  db.credintial,
-  { foreignKey: "companyID" },
-  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
-); //one-to-one relation
+db.company.hasOne(db.credintial, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-one relation
 db.company.hasMany(db.banner, {
   foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
-db.company.hasMany(
-  db.document,
-  { foreignKey: "companyID" },
-  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
-); //one-to-many relation
-db.company.hasMany(
-  db.team,
-  { foreignKey: "companyID" },
-  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
-); //one-to-many relation
-db.company.hasMany(
-  db.social,
-  { foreignKey: "companyID" },
-  { onUpdate: "CASCADE", onDelete: "RESTRICT" }
-); //one-to-many relation
+db.company.hasMany(db.document, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-many relation
+db.company.hasMany(db.team, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-many relation
+db.company.hasMany(db.social, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-many relation
 
 //sync model
 db.sequelize.sync({ force: false });

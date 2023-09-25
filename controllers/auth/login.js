@@ -17,6 +17,7 @@ const loginCompany = catchAsyncError(async (req, resp, next) => {
         email: email,
       },
     });
+
     // Check if the user exists
     if (!user) {
       return next(new ErrorHandler("Invalid Email", 400));
@@ -27,7 +28,7 @@ const loginCompany = catchAsyncError(async (req, resp, next) => {
         return next(new ErrorHandler("Invalid Password", 400));
       }
       // Generate a JWT token
-      const token = jwt.sign({ userId: user.id }, secretKey, {
+      const token = jwt.sign({ userId: user.companyID }, secretKey, {
         expiresIn: "1h",
       });
       resp.status(200).json({ message: "Login success", token });
@@ -35,4 +36,27 @@ const loginCompany = catchAsyncError(async (req, resp, next) => {
   }
 });
 
-module.exports = { loginCompany };
+const authorizedUser = catchAsyncError(async (req, resp, next) => {
+  const loginedUser = req.loginedUser;
+  if (!loginedUser) {
+    return next(new ErrorHandler("No user is loginned yet", 400));
+  }
+  const data = await credintial.findOne({
+    where: {
+      id: loginedUser,
+    },
+  });
+  const authorised = await company.findOne({
+    where: {
+      id: data.companyID,
+    },
+    include: [
+      {
+        model: credintial,
+        attributes: ["email"],
+      },
+    ],
+  });
+  await resp.status(200).json({ authorised });
+});
+module.exports = { loginCompany, authorizedUser };

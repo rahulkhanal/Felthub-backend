@@ -12,7 +12,18 @@ module.exports = catchAsyncError(async (req, resp, next) => {
     const decodedToken = await jwt.verify(token, secretKey);
     if (!decodedToken) {
       return next(new ErrorHandler("Token verification failed", 401));
+    } else {
+      const id = decodedToken.userId;
+      const data = await db.company.findOne({
+        where: {
+          id: id,
+        },
+      });
+      if (!data) {
+        return next(new ErrorHandler("Unathorized request", 401));
+      }
+      req.loginedUser = data.id;
+      next();
     }
-    next();
   }
 });
