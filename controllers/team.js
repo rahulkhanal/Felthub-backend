@@ -6,6 +6,7 @@ const addTeam = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const { file } = req;
   const { name, position } = req.body;
+  console.log(req.body);
   if (!name || !position) {
     return next(new ErrorHandler("Insufficient Credintial", 400));
   }

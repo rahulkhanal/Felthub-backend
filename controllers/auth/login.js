@@ -29,7 +29,7 @@ const loginCompany = catchAsyncError(async (req, resp, next) => {
       }
       // Generate a JWT token
       const token = jwt.sign({ userId: user.companyID }, secretKey, {
-        expiresIn: "1h",
+        expiresIn: "7d",
       });
       resp.status(200).json({ message: "Login success", token });
     }
