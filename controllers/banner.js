@@ -33,7 +33,11 @@ const deleteBanner = catchAsyncError(async (req, resp, next) => {
   const data = await db.banner.destroy({
     where: { companyID: loginedUser, id: id },
   });
-  resp.status(200).json(data);
+  if (data > 0) {
+    resp.status(200).json({ Message: "Delete successfully", data });
+  } else {
+    next(new ErrorHandler("Invalid banner", 400));
+  }
 });
 
 module.exports = { addBanner, getBanner, deleteBanner };

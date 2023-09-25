@@ -1,6 +1,7 @@
 const ErrorHandler = require("../errors/custom-err");
 const catchAsyncError = require("../middlewares/err/async-err");
 const db = require("../model/connection");
+const BaseURL = require("../utils/config");
 
 //add document
 const addDocument = catchAsyncError(async (req, resp, next) => {
@@ -29,7 +30,11 @@ const readDocument = catchAsyncError(async (req, resp, next) => {
   const data = await db.document.findAll({
     where: { companyID: loginedUser },
   });
-  resp.status(200).json(data);
+  const modifiedData = data.map((document) => ({
+    id: document.id,
+    image: `${BaseURL}/${document.image}`,
+  }));
+  resp.status(200).json(modifiedData);
 });
 
 //delete document
