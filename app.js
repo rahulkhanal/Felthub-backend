@@ -10,6 +10,7 @@ const db = require("./model/connection");
 const { loginRoutes } = require("./routes/login");
 const { bannerRoutes } = require("./routes/banner");
 const { documentRoutes } = require("./routes/document");
+const { socialRoutes } = require("./routes/social");
 
 //---------------------MIDDLEWARES
 app.get("/", homePage);
@@ -26,6 +27,7 @@ app.use("/api/v1", companyRoutes);
 app.use("/api/v1", loginRoutes);
 app.use("/api/v1", bannerRoutes);
 app.use("/api/v1", documentRoutes);
+app.use("/api/v1", socialRoutes);
 app.get("*", routeNotFound);
 
 //---------------------Error middlewares
