@@ -112,30 +112,21 @@ const updateCompanyProfile = async (req, resp, next) => {
 const updateCompanyCredintial = async (req, resp, next) => {
   const { id } = req.params;
   const { email, oldpassword, newpassword } = req.body;
-  if (email) {
-    const data = await credintial.update(
-      {
-        email: email,
-      },
-      {
-        where: {
-          companyID: id,
-        },
-      }
-    );
-    resp.status(200).json({ message: "Updated Sucessfully", data });
-  } else if (oldpassword && newpassword) {
+  if (oldpassword && newpassword && email) {
     const existingUser = await credintial.findOne({
       where: {
         companyID: id,
       },
     });
+    if (email !== existingUser.email) {
+      return next(ErrorHandler("Email doesn't match", 400));
+    }
     const passwordMatch = await bcrypt.compareSync(
       oldpassword,
       existingUser.password
     );
     if (!passwordMatch) {
-      return next(new ErrorHandler("Invalid Password", 400));
+      return next(new ErrorHandler("Password doesn't match", 400));
     } else {
       const saltRounds = 10;
       bcrypt.hash(newpassword, saltRounds, async (err, hashedPassword) => {
