@@ -51,6 +51,7 @@ db.company.hasMany(db.social, {
 }); //one-to-many relation
 
 //sync model
+// db.banner.sync({ force: true });
 db.sequelize.sync({ force: false });
 
 module.exports = db;

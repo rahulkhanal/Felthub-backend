@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataTypes) => {
   const banner = sequelize.define(
     "banner",
@@ -6,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
+      },
+      heading: {
+        type: DataTypes.STRING,
       },
       image: {
         type: DataTypes.STRING,
