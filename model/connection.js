@@ -22,6 +22,7 @@ db.banner = require("./banner")(sequelize, DataTypes);
 db.document = require("./document")(sequelize, DataTypes);
 db.team = require("./team")(sequelize, DataTypes);
 db.social = require("./social")(sequelize, DataTypes);
+db.category = require("./category")(sequelize, DataTypes);
 
 //---------------relations
 db.company.hasOne(db.credintial, {
@@ -49,9 +50,13 @@ db.company.hasMany(db.social, {
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.company.hasMany(db.category, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-many relation
 
 //sync model
-// db.banner.sync({ force: true });
 db.sequelize.sync({ force: false });
 
 module.exports = db;

@@ -12,6 +12,7 @@ const { bannerRoutes } = require("./routes/banner");
 const { documentRoutes } = require("./routes/document");
 const { socialRoutes } = require("./routes/social");
 const { teamRoutes } = require("./routes/team");
+const { categoryRoutes } = require("./routes/category");
 
 //---------------------MIDDLEWARES
 app.get("/", homePage);
@@ -30,6 +31,7 @@ app.use("/api/v1", bannerRoutes);
 app.use("/api/v1", documentRoutes);
 app.use("/api/v1", socialRoutes);
 app.use("/api/v1", teamRoutes);
+app.use("/api/v1", categoryRoutes);
 app.get("*", routeNotFound);
 
 //---------------------Error middlewares

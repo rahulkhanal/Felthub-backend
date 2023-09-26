@@ -2,6 +2,7 @@ const ErrorHandler = require("../errors/custom-err");
 const catchAsyncError = require("../middlewares/err/async-err");
 const db = require("../model/connection");
 
+//create social link
 const addSocial = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const { name, Link } = req.body;
@@ -44,6 +45,8 @@ const deleteSocial = catchAsyncError(async (req, resp, next) => {
     next(new ErrorHandler("Invalid social link", 400));
   }
 });
+
+//update social link
 const updateSocial = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const { id } = req.params;

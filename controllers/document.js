@@ -32,6 +32,7 @@ const readDocument = catchAsyncError(async (req, resp, next) => {
   });
   const modifiedData = data.map((document) => ({
     id: document.id,
+    name: document.name,
     image: `${BaseURL}/${document.image}`,
   }));
   resp.status(200).json(modifiedData);

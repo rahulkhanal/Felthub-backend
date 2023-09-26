@@ -1,6 +1,7 @@
 const ErrorHandler = require("../errors/custom-err");
 const catchAsyncError = require("../middlewares/err/async-err");
 const db = require("../model/connection");
+const BaseURL = require("../utils/config");
 
 const addBanner = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
@@ -24,7 +25,12 @@ const getBanner = catchAsyncError(async (req, resp, next) => {
   const data = await db.banner.findAll({
     where: { companyID: loginedUser },
   });
-  resp.status(200).json(data);
+  const modifiedData = await data.map((document) => ({
+    id: document.id,
+    title: document.heading,
+    image: `${BaseURL}/${document.image}`,
+  }));
+  resp.status(200).json(modifiedData);
 });
 
 const deleteBanner = catchAsyncError(async (req, resp, next) => {
@@ -33,6 +39,7 @@ const deleteBanner = catchAsyncError(async (req, resp, next) => {
   const data = await db.banner.destroy({
     where: { companyID: loginedUser, id: id },
   });
+
   if (data > 0) {
     resp.status(200).json({ Message: "Delete successfully", data });
   } else {
