@@ -1,6 +1,7 @@
 const ErrorHandler = require("../errors/custom-err");
 const catchAsyncError = require("../middlewares/err/async-err");
 const db = require("../model/connection");
+const BaseURL = require("../utils/config");
 const { company, credintial, category } = db;
 
 //create company
@@ -21,7 +22,7 @@ const addCategory = catchAsyncError(async (req, resp, next) => {
   resp.status(201).json(data);
 });
 
-//delete APIs
+//delete API
 const deleteCategory = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const { id } = req.params;
@@ -47,7 +48,7 @@ const deleteCategory = catchAsyncError(async (req, resp, next) => {
   }
 });
 
-//read APIs
+//read API
 const readCategory = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const data = await category.findAll({
@@ -55,7 +56,15 @@ const readCategory = catchAsyncError(async (req, resp, next) => {
       companyID: loginedUser,
     },
   });
-  resp.status(200).json(data);
+  const newDta = data.map((item) => {
+    return {
+      id: item.id,
+      name: item.Name,
+      image: `${BaseURL}/${item.image}`,
+      status: item.status,
+    };
+  });
+  resp.status(200).json(newDta);
 });
 
 module.exports = { addCategory, deleteCategory, readCategory };
