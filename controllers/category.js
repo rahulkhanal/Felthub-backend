@@ -67,4 +67,23 @@ const readCategory = catchAsyncError(async (req, resp, next) => {
   resp.status(200).json(newDta);
 });
 
-module.exports = { addCategory, deleteCategory, readCategory };
+//read API
+const updateCategory = catchAsyncError(async (req, resp, next) => {
+  const loginedUser = req.loginedUser;
+  const { name, status } = req.body;
+  const { id } = req.params;
+  const { file } = req;
+  const filePath = file?.path || null;
+  const data = await category.update(
+    { Name: name, status, image: filePath },
+    {
+      where: {
+        companyID: loginedUser,
+        id,
+      },
+    }
+  );
+  resp.status(200).json(data);
+});
+
+module.exports = { addCategory, deleteCategory, readCategory, updateCategory };
