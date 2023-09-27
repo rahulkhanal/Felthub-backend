@@ -67,11 +67,20 @@ const readCategory = catchAsyncError(async (req, resp, next) => {
   resp.status(200).json(newDta);
 });
 
-//read API
+//update API
 const updateCategory = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const { name, status } = req.body;
   const { id } = req.params;
+  const existingUser = await category.findAll({
+    where: {
+      companyID: loginedUser,
+    },
+  });
+
+  if(!existingUser){
+    
+  }
   const { file } = req;
   const filePath = file?.path || null;
   const data = await category.update(

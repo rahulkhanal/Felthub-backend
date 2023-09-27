@@ -56,6 +56,8 @@ db.company.hasMany(db.category, {
   onDelete: "RESTRICT",
 }); //one-to-many relation
 
+
+
 //sync model
 db.sequelize.sync({ force: false });
 
