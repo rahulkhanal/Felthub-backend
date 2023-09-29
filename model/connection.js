@@ -23,6 +23,11 @@ db.document = require("./document")(sequelize, DataTypes);
 db.team = require("./team")(sequelize, DataTypes);
 db.social = require("./social")(sequelize, DataTypes);
 db.category = require("./category")(sequelize, DataTypes);
+db.product = require("./product")(sequelize, DataTypes);
+db.description = require("./description")(sequelize, DataTypes);
+db.attribute = require("./attribute")(sequelize, DataTypes);
+db.attributeValue = require("./attributeValue")(sequelize, DataTypes);
+db.pricing = require("./pricing")(sequelize, DataTypes);
 
 //---------------relations
 db.company.hasOne(db.credintial, {
@@ -55,8 +60,20 @@ db.company.hasMany(db.category, {
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.company.hasMany(db.product, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-many relation
 
+//-----------------------------------
+db.category.hasOne(db.product, {
+  foreignKey: "categoryID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+});
 
+//-----------------------------------
 
 //sync model
 db.sequelize.sync({ force: false });
