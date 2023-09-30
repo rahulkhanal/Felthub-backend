@@ -13,6 +13,7 @@ const { documentRoutes } = require("./routes/document");
 const { socialRoutes } = require("./routes/social");
 const { teamRoutes } = require("./routes/team");
 const { categoryRoutes } = require("./routes/category");
+const { attributeRoutes } = require("./routes/attribute");
 
 //---------------------MIDDLEWARES
 app.get("/", homePage);
@@ -32,6 +33,8 @@ app.use("/api/v1", documentRoutes);
 app.use("/api/v1", socialRoutes);
 app.use("/api/v1", teamRoutes);
 app.use("/api/v1", categoryRoutes);
+app.use("/api/v1", attributeRoutes);
+
 app.get("*", routeNotFound);
 
 //---------------------Error middlewares

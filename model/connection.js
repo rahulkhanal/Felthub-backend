@@ -65,6 +65,11 @@ db.company.hasMany(db.product, {
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.company.hasMany(db.attribute, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+}); //one-to-many relation
 
 //-----------------------------------
 db.category.hasOne(db.product, {
@@ -74,6 +79,17 @@ db.category.hasOne(db.product, {
 });
 
 //-----------------------------------
+db.attribute.hasOne(db.attributeValue, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+});
+//-----------------------------------
+db.pricing.hasOne(db.attributeValue, {
+  foreignKey: "companyID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+});
 
 //sync model
 db.sequelize.sync({ force: false });
