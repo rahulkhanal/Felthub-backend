@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
+      value: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
     },
     {
       //same table name as schema

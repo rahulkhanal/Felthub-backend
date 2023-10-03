@@ -77,16 +77,21 @@ db.category.hasOne(db.product, {
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
-
 //-----------------------------------
-db.attribute.hasOne(db.attributeValue, {
-  foreignKey: "companyID",
+db.attribute.hasMany(db.attributeValue, {
+  foreignKey: "attributeID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
 //-----------------------------------
-db.pricing.hasOne(db.attributeValue, {
-  foreignKey: "companyID",
+db.product.hasMany(db.attributeValue, {
+  foreignKey: "productID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+});
+//-----------------------------------
+db.product.hasMany(db.description, {
+  foreignKey: "productID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });

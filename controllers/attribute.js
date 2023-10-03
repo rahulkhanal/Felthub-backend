@@ -2,6 +2,7 @@ const ErrorHandler = require("../errors/custom-err");
 const catchAsyncError = require("../middlewares/err/async-err");
 const db = require("../model/connection");
 
+//create api
 const addAttribute = catchAsyncError(async (req, resp, next) => {
   const loginedUser = req.loginedUser;
   const { type } = req.body;
@@ -15,6 +16,7 @@ const addAttribute = catchAsyncError(async (req, resp, next) => {
   resp.status(200).json({ message: "Successfully inserted", data });
 });
 
+//read api
 const getAttribute = catchAsyncError(async (req, resp, next) => {
   const data = await db.attribute.findAll({});
   resp.status(200).json(data);

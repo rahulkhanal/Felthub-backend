@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: true,
       },
+      feature: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       //same table name as schema
