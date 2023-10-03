@@ -9,11 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       price: {
         type: DataTypes.STRING,
-        unique: true,
       },
       discount: {
         type: DataTypes.STRING,
-        unique: true,
       },
     },
     {

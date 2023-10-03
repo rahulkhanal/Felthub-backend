@@ -95,8 +95,14 @@ db.product.hasMany(db.description, {
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
+//-----------------------------------
+db.attributeValue.hasMany(db.pricing, {
+  foreignKey: "attributeValueID",
+  onUpdate: "CASCADE",
+  onDelete: "RESTRICT",
+});
 
 //sync model
-db.sequelize.sync({ force: false });
+db.sequelize.sync({ force: true });
 
 module.exports = db;
