@@ -31,78 +31,102 @@ db.pricing = require("./pricing")(sequelize, DataTypes);
 
 //---------------relations
 db.company.hasOne(db.credintial, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-one relation
+db.credintial.belongsTo(db.company);
+
 db.company.hasMany(db.banner, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.banner.belongsTo(db.company);
+
 db.company.hasMany(db.document, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.document.belongsTo(db.company);
+
 db.company.hasMany(db.team, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.team.belongsTo(db.company);
+
 db.company.hasMany(db.social, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.social.belongsTo(db.company);
+
 db.company.hasMany(db.category, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.category.belongsTo(db.company);
+
 db.company.hasMany(db.product, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.product.belongsTo(db.company);
+
 db.company.hasMany(db.attribute, {
-  foreignKey: "companyID",
+  // foreignKey: "companyID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 }); //one-to-many relation
+db.attribute.belongsTo(db.company);
 
 //-----------------------------------
 db.category.hasOne(db.product, {
-  foreignKey: "categoryID",
+  // foreignKey: "categoryID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
+db.product.belongsTo(db.category);
+
 //-----------------------------------
 db.attribute.hasMany(db.attributeValue, {
-  foreignKey: "attributeID",
+  // foreignKey: "attributeID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
+db.attributeValue.belongsTo(db.attribute);
+
 //-----------------------------------
 db.product.hasMany(db.attributeValue, {
-  foreignKey: "productID",
+  // foreignKey: "productID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
+db.attributeValue.belongsTo(db.product);
+
 //-----------------------------------
-db.product.hasMany(db.description, {
-  foreignKey: "productID",
+db.product.hasOne(db.description, {
+  // foreignKey: "productID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
+db.description.belongsTo(db.product);
+
 //-----------------------------------
 db.attributeValue.hasMany(db.pricing, {
-  foreignKey: "attributeValueID",
+  // foreignKey: "attributeValueID",
   onUpdate: "CASCADE",
   onDelete: "RESTRICT",
 });
+db.pricing.belongsTo(db.attributeValue);
 
 //sync model
-db.sequelize.sync({ force: true });
+db.sequelize.sync({ force: false });
 
 module.exports = db;

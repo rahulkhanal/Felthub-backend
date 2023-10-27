@@ -7,7 +7,7 @@ const secretKey = process.env.SECRET_KEY;
 module.exports = catchAsyncError(async (req, resp, next) => {
   const token = req.header("Authorization");
   if (!token) {
-    next(new ErrorHandler("Authentication Failed", 401));
+    next(new ErrorHandler("Authentication token failed", 401));
   } else {
     const decodedToken = await jwt.verify(token, secretKey);
     if (!decodedToken) {
